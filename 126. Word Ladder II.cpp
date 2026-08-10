@@ -5,14 +5,9 @@ class Solution {
     unordered_set<string> wordSet{wordList.begin(), wordList.end()};
     if (!wordSet.contains(endWord))
       return {};
-
-    // {"hit": ["hot"], "hot": ["dot", "lot"], ...}
     unordered_map<string, vector<string>> graph;
-
-    // Build the graph from the beginWord to the endWord.
     if (!bfs(beginWord, endWord, wordSet, graph))
       return {};
-
     vector<vector<string>> ans;
     dfs(graph, beginWord, endWord, {beginWord}, ans);
     return ans;
@@ -22,7 +17,6 @@ class Solution {
            unordered_set<string>& wordSet,
            unordered_map<string, vector<string>>& graph) {
     unordered_set<string> currentLevelWords{beginWord};
-
     while (!currentLevelWords.empty()) {
       for (const string& word : currentLevelWords)
         wordSet.erase(word);
@@ -44,14 +38,11 @@ class Solution {
         return true;
       currentLevelWords = std::move(nextLevelWords);
     }
-
     return false;
   }
-
   void getChildren(const string& parent, const unordered_set<string>& wordSet,
                    vector<string>& children) {
     string s(parent);
-
     for (int i = 0; i < s.length(); ++i) {
       const char cache = s[i];
       for (char c = 'a'; c <= 'z'; ++c) {
